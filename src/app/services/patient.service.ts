@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseUrl = 'http://localhost:8080/patients/addPatients';
+const baseUrl = 'https://prmsystem-backend-testing.herokuapp.com/patients/addPatients';
 
 
 @Injectable({
