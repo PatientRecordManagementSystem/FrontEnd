@@ -1,5 +1,5 @@
-import { Patient } from './../../../model/patient.model';
-import { PatientService } from '../../../service/patient.service';
+import { Patient } from '../../models/patient.model';
+import { PatientService } from '../../services/patient.service';
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
