@@ -33,7 +33,7 @@ export class ViewRecordComponent implements OnInit {
   checked = false;
   disabled = false;
   isChecked = true;
-
+  isLoading = true;
   private patients: Patient[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -60,6 +60,8 @@ export class ViewRecordComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.isLoading = false;
+
     }
     )
     this.viewRecordService.showDeactivatedPatientRecords().subscribe(p => {
@@ -70,8 +72,9 @@ export class ViewRecordComponent implements OnInit {
       })
     }
     )
-
+  
   }
+
   ngAfterViewInit() {
 
   }
@@ -86,20 +89,24 @@ export class ViewRecordComponent implements OnInit {
   }
 
   toggleSourceData() {
-
+    this.clearDataSource();
     if (!this.isChecked) {
       this.dataSource = new MatTableDataSource(this.deactivatedRecords);
     }
     else {
       this.dataSource = new MatTableDataSource(this.activatedRecords);
     }
-    console.log(this.deactivatedRecords);
+    this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  }
+  clearDataSource(){
+    this.dataSource=null;
   }
   openDialog(row) {
     const dialogRef = this.dialog.open(ViewIndividualRecordDialogComponent,{data:row});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+     this.ngOnInit();
+    })
   }
 }

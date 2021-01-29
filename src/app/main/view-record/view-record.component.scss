@@ -3,10 +3,8 @@ table {
   
 }
 .container{
-  margin-top: 100px;
-  margin-bottom: 100px;
-  margin-right: 150px;
-  margin-left: 80px;
+  margin-top: 10%;
+  margin-left: 30%;
 }
 
 .mat-form-field {
@@ -16,4 +14,11 @@ table {
 
 td, th {
   width: 25%;
+}
+
+.spinner{
+  display: block;
+  margin-left: 10%;
+  margin-right: 10%;
+
 }

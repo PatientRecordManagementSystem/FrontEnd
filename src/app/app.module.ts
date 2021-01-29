@@ -19,6 +19,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 
 
 import { AppComponent } from './app.component';
@@ -29,7 +33,7 @@ import { ViewRecordComponent } from './main/view-record/view-record.component';
 import { GenerateReportComponent } from './main/generate-report/generate-report.component';
 
 import { ViewRecordService } from "../app/services/view-record.service";
-import { PatientService } from '../app/services/patient.service';
+import { PatientService } from './services/patient.service';
 
 
 @NgModule({
@@ -63,9 +67,12 @@ import { PatientService } from '../app/services/patient.service';
     MatDialogModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule,
+    MatButtonToggleModule
   ],
-  providers: [ViewRecordService,PatientService],
+  providers: [ViewRecordService, PatientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
