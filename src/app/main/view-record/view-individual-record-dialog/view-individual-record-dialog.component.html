@@ -5,13 +5,13 @@
 <mat-dialog-content class="mat-typography">
     <div class="example-container">
 
-        <mat-tab-group animationDuration="10000ms">
+        <mat-tab-group animationDuration="1000ms">
 
             <mat-tab label="Edit">
                 <br>
                 <br>
                 <div class="form-container">
-                    <form [formGroup]="recordForm" (submit)="submitRecord()">
+                    <form [formGroup]="recordForm">
         
                         <mat-form-field class="form-field" appearance="outline">
                             <mat-label> First Name
@@ -49,9 +49,24 @@
                             </mat-label>
                             <input matInput formControlName="gender" required>
                         </mat-form-field>
+
+                        <br>
+
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label> Contact Number
+                            </mat-label>
+                            <input matInput formControlName="contactNumber" required>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-field" appearance="outline">
+                            <mat-label> Address
+                            </mat-label>
+                            <input matInput formControlName="address" required>
+                        </mat-form-field>
         
-        
-        
+                        <br>
+                        <button  *ngIf="isEdit" (click)="submitEditRecordForm()" mat-flat-button color="accent">Submit</button>
+
                     </form>
                     
                 </div>
@@ -102,17 +117,7 @@
 
             <br>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label> Contact Number
-                </mat-label>
-                <input matInput formControlName="contactNumber" required>
-            </mat-form-field>
-
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label> Address
-                </mat-label>
-                <input matInput formControlName="address" required>
-            </mat-form-field>
+          
 
                
            

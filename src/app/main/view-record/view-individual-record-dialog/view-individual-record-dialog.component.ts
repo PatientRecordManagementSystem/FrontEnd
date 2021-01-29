@@ -42,7 +42,8 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       ])
 
     })
-  
+    this.recordForm.disable();
+
   }
 
   get addressArray (){
@@ -135,13 +136,13 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
 
 
   //Code here Albert
-  submitRecord()
-  {
-
+  submitEditRecordForm(){
+    
   }
   closeEdit(){
     this.isEdit=false;
     this.recordForm.disable();
 
   }
+  
 }
