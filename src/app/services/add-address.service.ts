@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class AddressService {
 
-baseUrl = 'http://localhost:8080';
+baseUrl = 'https://prmsystem-backend-testing.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 

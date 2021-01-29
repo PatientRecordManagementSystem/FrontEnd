@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Filter } from '../models/Filter';
 
-const baseUrl = 'http://localhost:8080/patients/export';
+const baseUrl = 'https://prmsystem-backend-testing.herokuapp.com/patients/export';
 
 
 @Injectable({
