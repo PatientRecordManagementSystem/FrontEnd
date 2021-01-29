@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -68,6 +69,7 @@ import { PatientService } from './services/patient.service';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTabsModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     MatButtonToggleModule

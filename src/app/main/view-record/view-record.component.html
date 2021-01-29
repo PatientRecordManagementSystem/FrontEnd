@@ -6,17 +6,29 @@
             <mat-label>Search</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. John Doe" #input>
         </mat-form-field>
-        <mat-slide-toggle [(ngModel)]="isChecked" (change)="toggleSourceData()" [color]="color" [checked]="checked"
+        <!-- <mat-slide-toggle [(ngModel)]="isChecked" (change)="toggleSourceData()" [color]="color" [checked]="checked"
             [disabled]="disabled">
             Toggle Records
-        </mat-slide-toggle>
+        </mat-slide-toggle> -->
 
         <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
             <mat-button-toggle  value="true">Enabled</mat-button-toggle>
             <mat-button-toggle value="italic">Disabled</mat-button-toggle>
             <mat-button-toggle value="underline">All</mat-button-toggle>
           </mat-button-toggle-group> -->
-        
+
+        <mat-button-toggle-group #group="matButtonToggleGroup" value="All">
+            <mat-button-toggle (change)="onValChange($event.value)" value="Activated">
+                <span>Activated</span>
+            </mat-button-toggle>
+            <mat-button-toggle (change)="onValChange($event.value)" value="Deactivated">
+                <span>Deactivated</span>
+            </mat-button-toggle>
+
+            <mat-button-toggle (change)="onValChange($event.value)" value="All">
+                <span>All</span>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
         <div class="mat-elevation-z8">
             <table style="width:100%" mat-table [dataSource]="dataSource" matSort>
 

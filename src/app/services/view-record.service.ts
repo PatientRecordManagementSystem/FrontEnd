@@ -14,7 +14,7 @@ export class ViewRecordService {
   constructor(private http: HttpClient) { }
 
   showPatientRecords():Observable<any> {
-    return this.http.get(`${this.apiUrl}/patients/`);
+    return this.http.get(`${this.apiUrl}/patients/getAllPatients`);
   }
   showActivatedPatientRecords():Observable<any> {
     return this.http.get(`${this.apiUrl}/patients/activated`);
