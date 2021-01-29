@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ViewRecordService {
-  apiUrl: string = 'https://prmsystem-backend-testing.herokuapp.com/';
+  apiUrl: string = 'https://prmsystem-backend-testing.herokuapp.com';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) { }
 
