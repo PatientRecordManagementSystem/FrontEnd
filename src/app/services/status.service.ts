@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class StatusService {
 
-  base = "http://localhost:8080"
+  base = "https://prmsystem-backend-testing.herokuapp.com"
 
   constructor(private http: HttpClient) { }
 
