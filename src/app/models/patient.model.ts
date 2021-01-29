@@ -5,7 +5,7 @@ export class Patient {
     email: string;
     address: string;
     contactNumber : string;
-    birthdate:Date;
+    birthdate:string;
     gender:string;
     status:Number;
 }
