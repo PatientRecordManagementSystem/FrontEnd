@@ -37,7 +37,7 @@ export class ViewRecordComponent implements OnInit {
   disabled = false;
   isChecked = true;
   isLoading = true;
-  value = "";
+  value = "All";
 
 
   private patients: Patient[] = [];
@@ -87,51 +87,7 @@ export class ViewRecordComponent implements OnInit {
     
 
     dialogRef.afterClosed().subscribe(result => {
-      switch (this.value) {
-        case 'Activated':
-          this.viewRecordService.showActivatedPatientRecords().subscribe(p => {
-            this.activatedRecords = p.map(p => {
-              p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-              p['date'] = new Date(p['date']).toLocaleDateString('en-US');
-              return p;
-            })
-            this.dataSource = new MatTableDataSource(this.activatedRecords);
-            this.isLoading = false;
-          }
-          );
-          break;
-        case 'Deactivated':
-          this.viewRecordService.showDeactivatedPatientRecords().subscribe(p => {
-            this.deactivatedRecords = p.map(p => {
-              p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-              p['date'] = new Date(p['date']).toLocaleDateString('en-US');
-              return p;
-            })
-            this.dataSource = new MatTableDataSource(this.deactivatedRecords);
-            this.isLoading = false;
-          }
-          )
-          break;
-        case 'All':
-          this.viewRecordService.showPatientRecords().subscribe(p => {
-            this.allRecords = p.map(p => {
-              p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
-              p['date'] = new Date(p['date']).toLocaleDateString('en-US');
-              return p;
-            })
-            this.dataSource = new MatTableDataSource(this.allRecords);
-            this.isLoading = false;
-          }
-          )
-          break;
-        default:
-
-      }
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-
-
+      this.onValChange(this.value);
     })
   }
   onValChange(value) {
@@ -146,6 +102,8 @@ export class ViewRecordComponent implements OnInit {
             return p;
           })
           this.dataSource = new MatTableDataSource(this.activatedRecords);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
           this.isLoading = false;
         }
         );
@@ -158,6 +116,8 @@ export class ViewRecordComponent implements OnInit {
             return p;
           })
           this.dataSource = new MatTableDataSource(this.deactivatedRecords);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
           this.isLoading = false;
         }
         )
@@ -170,6 +130,8 @@ export class ViewRecordComponent implements OnInit {
             return p;
           })
           this.dataSource = new MatTableDataSource(this.allRecords);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
           this.isLoading = false;
         }
         )
@@ -177,8 +139,7 @@ export class ViewRecordComponent implements OnInit {
       default:
 
     }
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
   }
 
 }
