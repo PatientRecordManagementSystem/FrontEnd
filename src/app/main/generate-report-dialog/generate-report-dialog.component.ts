@@ -21,7 +21,6 @@ export class GenerateReportDialogComponent implements OnInit {
 filter = this.fb.group({
   filterValue:  new FormControl(''),
   status:  new FormControl(''), 
-    // statusValue: [''],
     statusValue: new FormControl(''),
   gender:  new FormControl(''),  
   genderCheckbox:  new FormControl(''),
@@ -29,21 +28,24 @@ filter = this.fb.group({
     startDate:  new FormControl(''),
     endDate:  new FormControl(''),
 });
-submitted = false;
+submitted: boolean = false;
 
 // FORM FUNCTION
-
 onSubmit(event) {
   event.preventDefault();
   this.submitted = true;
-  
-  if (this.filter.valid) {
-    console.log("VALID!!!");
+
+  if (this.filter.valid && this.checkFiltersValid()) {
     this.confirm();
     this.dialogRef.close();
   }else{
-    console.log("INVALID!!!");
+    console.log('INVALID!!!');
   }
+}
+
+checkFiltersValid(): boolean{
+  return  !(this.submitted && this.isShownFilter && this.filter.get('status').value == false 
+  && this.filter.get('gender').value == false && this.filter.get('birthdate').value == false);
 }
 
 confirm(){
@@ -111,7 +113,6 @@ getCurrentDateTime() : string {
 }
 
 downLoadFile(data: any, type: string) {
-
   var fileName = "PatientRecords_" + this.getCurrentDateTime() + ".xlsx";
 
   let blob = new Blob([data], { type: type});
@@ -147,30 +148,24 @@ toggleShowFilter() {
     this.isShownGender = false;
     this.isShownBirthdate = false;
   }
-  // this.setValidators();
 }
 
 toggleShowStatus() {
   this.submitted = false;
   this.isShownStatus = ! this.isShownStatus;
-  // this.setValidators();
 }
 
 toggleShowGender() {
   this.submitted = false;
   this.isShownGender = ! this.isShownGender;
-  // this.setValidators();
 }
 
 toggleShowBirthdate() {
   this.submitted = false;
   this.isShownBirthdate = ! this.isShownBirthdate;
-  // this.setValidators();
 }
 
 setValidators(){
-  console.log("setValidators()");
-
   this.filter.get('filterValue').valueChanges
   .subscribe(check => {
     if(check == false){
@@ -179,8 +174,13 @@ setValidators(){
       this.filter.get('genderCheckbox').clearValidators();
       this.filter.get('startDate').clearValidators();
       this.filter.get('endDate').clearValidators();
-    }
-    this.filter.get('startDate').updateValueAndValidity();
+
+      this.filter.get('filterValue').updateValueAndValidity();
+      this.filter.get('statusValue').updateValueAndValidity();
+      this.filter.get('genderCheckbox').updateValueAndValidity();
+      this.filter.get('startDate').updateValueAndValidity();
+      this.filter.get('endDate').updateValueAndValidity();
+    }  
   });
 
   this.filter.get('status').valueChanges
@@ -188,7 +188,6 @@ setValidators(){
       if(check == true){
         this.filter.get('statusValue').setValidators([Validators.required]);
       } else{
-        console.log("STATUS NOT REQUIRED");
         this.filter.get('statusValue').clearValidators();
       }
       this.filter.get('statusValue').updateValueAndValidity();
