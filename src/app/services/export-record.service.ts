@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Filter } from '../models/Filter';
 
 
-const baseUrl = 'https://prmsystem-backend-testing.herokuapp.com/patients/export';
+const baseUrl = 'https://prmsystem-backend-testing.herokuapp.com';
 
 
 
