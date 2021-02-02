@@ -39,7 +39,6 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   isConfirmationScreen: boolean = false;
   actionSelected: boolean;
   submitted = false;
-  addressList;
   addressForm: FormGroup;
   alertSuccess: boolean = false;
   alertEmailDuplicateExist: boolean = false;
@@ -50,9 +49,9 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   maxDate = new Date();
   valid = true;
   patientId = 0;
+  addressList: NewAddress[]
   // private patient: Patient[] = [];
   addressList$:Observable<any>;
-  
   patient: Patient = {
     lastName: this.data.lastName,
     firstName: this.data.firstName,
@@ -80,10 +79,10 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       birthdate: [this.data.birthdate, [Validators.required]],
       gender: [this.data.gender, [Validators.required]],
     });
+    
     this.addressForm=this.formBuilder.group({
-    addressArray:this.formBuilder.array([this.formBuilder.control("")],[Validators.required]),
-  
-
+    // addressArray:this.formBuilder.array([this.formBuilder.control("")],[Validators.required]),
+    addressArray:this.formBuilder.array([],[Validators.required]),
     });
     this.recordForm.disable();
     this.viewAddress();
@@ -136,12 +135,15 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
        this.addressService.create(body).subscribe(
        p=>{
         this.toastr.success("Success", "Address Successfully Added")
+        this.addressForm.reset();
+        this.updateList();
 
         // this.dialog.open(ViewIndividualRecordDialogComponent);
        },
       
        error =>{
          this.toastr.error('Oops', 'There is a duplicate address entry');
+         this.addressForm.reset();
        }
        )
       //  this.dataSource = new MatTableDataSource(this);

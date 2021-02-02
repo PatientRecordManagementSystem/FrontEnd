@@ -1,5 +1,7 @@
 <div class="dialog">
-
+    <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+        <mat-icon class="close-icon" color="warn">close</mat-icon>
+      </button>
     <div *ngIf="!isConfirmationScreen">
         <h2 mat-dialog-title>Patient Record</h2>
         <div *ngIf="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -149,7 +151,7 @@
 
         <mat-dialog-actions align="end">
 
-            <button mat-flat-button color="warn" mat-dialog-close>Close</button>
+            <!-- <button mat-flat-button color="warn" mat-dialog-close>Close</button> -->
             <button *ngIf="data.status==0" (click)="showConfirmationScreen()" mat-flat-button
                 color="green">Activate</button>
             <button *ngIf="data.status==1" (click)="showConfirmationScreenDeactivate()" mat-flat-button
