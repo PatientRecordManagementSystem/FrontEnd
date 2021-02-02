@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseUrl = 'http://localhost:8080/patients/addPatients';
-const updatePatientUrl = 'http://localhost:8080/patients/updatePatientRecord';
+const baseUrl = 'https://prms-testing-2-backend.herokuapp.com/patients/addPatients';
+
+
+const updatePatientUrl = 'https://prms-testing-2-backend.herokuapp.com/patients/updatePatientRecord';
 
 @Injectable({
   providedIn: 'root',

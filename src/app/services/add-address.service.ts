@@ -12,7 +12,7 @@ import { NewAddress } from 'src/app/models/address.model';
 })
 export class AddressService {
 
-baseUrl = 'http://localhost:8080';
+baseUrl = 'https://prms-testing-2-backend.herokuapp.com/';
 
   constructor(private http: HttpClient) { }
 

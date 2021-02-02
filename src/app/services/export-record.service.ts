@@ -3,7 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Filter } from '../models/Filter';
 
-// const baseUrl = 'http://localhost:8080/';
+
+const baseUrl = 'https://prms-testing-2-backend.herokuapp.com/';
+
+
 
 
 @Injectable({
@@ -16,7 +19,7 @@ export class ExportRecordService {
     constructor(private http: HttpClient) { }
 
     create(data: Filter): Observable<any> {
-        return this.http.post(`${this.apiUrl}/patients/export`, data, {responseType: 'arraybuffer'})
+        return this.http.post(`${baseUrl}/patients/export`, data, {responseType: 'arraybuffer'})
     }
     
 }
