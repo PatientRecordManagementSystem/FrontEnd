@@ -65,7 +65,7 @@ export class ViewRecordComponent implements OnInit {
         return data.firstName.toLowerCase().indexOf(filter) == 0 || data.middleName.toLowerCase().indexOf(filter) == 0 ||
           data.lastName.toLowerCase().indexOf(filter) == 0 || data.gender.toLowerCase().indexOf(filter) == 0 ||
           data.date.toString().toLowerCase().includes(filter) || data.fullName.toLowerCase().indexOf(filter) == 0 ||
-          data.firstLast.toLowerCase().indexOf(filter) == 0 || data.email.toLowerCase().indexOf(filter) ||
+          data.firstLast.toLowerCase().indexOf(filter) == 0 || data.email.toLowerCase().includes(filter) ||
           data.contactNumber.toLowerCase().indexOf(filter) == 0;
       };
 
