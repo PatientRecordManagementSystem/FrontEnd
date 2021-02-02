@@ -21,7 +21,7 @@
             role="alert">
             <strong>Error ! </strong> Contact Number and Email Already Used Please Enter Another!
         </div>
-    </div>
+    
 
     <mat-dialog-content class="mat-typography">
         <mat-tab-group animationDuration="1000ms">
@@ -102,22 +102,18 @@
 
 
                         <button mat-flat-button *ngIf="isEdit" [disabled]="recordForm.invalid" mat-button
-                        (click)="submitEditRecordForm()" color="accent">Update</button>
+                            (click)="submitEditRecordForm()" color="accent">Update</button>
 
                     </form>
 
                 </div>
-                
+
             </mat-tab>
-           
 
-
-
-
-            <mat-tab *ngIf="data.status==1"  label="Add Addresses">
+            <mat-tab *ngIf="data.status==1" label="Add Addresses">
                 <br>
                 <div>
-                    <button  (click)="createAddress()" mat-flat-button color="primary">Add
+                    <button (click)="createAddress()" mat-flat-button color="primary">Add
                         Address</button>
                 </div>
                 <form [formGroup]="addressForm" (submit)="submitAddress()">
@@ -139,8 +135,6 @@
             </mat-tab>
 
 
-
-
             <mat-tab (click)="updateList()" label="Address List">
                 <ul>
                     <li *ngFor="let address of addressList">
@@ -150,24 +144,7 @@
             </mat-tab>
 
         </mat-tab-group>
-
-
-
-
-
-
-        <!-- <div formArrayName="addressArray">
-
-            <button mat-flat-button color="warn" mat-dialog-close>Close</button>
-            <button *ngIf="!isEdit&&data.status==1" mat-button (click)="editRecord()">Edit Record</button>
-
-
-            <button *ngIf="isEdit" mat-button (click)="closeEdit()">Close Edit</button>
-
-        </div> -->
-        <!-- <button (click)="submitAddress()" mat-flat-button color="accent">Submit</button> -->
-
-
+    
         <br>
 
         <mat-dialog-actions align="end">
