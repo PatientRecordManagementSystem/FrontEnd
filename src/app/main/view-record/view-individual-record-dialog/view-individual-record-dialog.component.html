@@ -93,20 +93,31 @@
                                 required>
                         </mat-form-field>
 
+
+                        <mat-form-field *ngIf="data.status==0" class="form-field" appearance="outline">
+                            <mat-label> Status
+                            </mat-label>
+                            <input matInput formControlName="status" [readonly]="true">
+                        </mat-form-field>
+
+
+                        <button mat-flat-button *ngIf="isEdit" [disabled]="recordForm.invalid" mat-button
+                        (click)="submitEditRecordForm()" color="accent">Update</button>
+
                     </form>
 
                 </div>
+                
             </mat-tab>
-            <button mat-flat-button *ngIf="isEdit" [disabled]="recordForm.invalid" mat-button
-                (click)="submitEditRecordForm()" color="accent">Update</button>
+           
 
 
 
 
-            <mat-tab label="Add Addresses">
+            <mat-tab *ngIf="data.status==1"  label="Add Addresses">
                 <br>
                 <div>
-                    <button (click)="createAddress()" mat-flat-button color="primary">Add
+                    <button  (click)="createAddress()" mat-flat-button color="primary">Add
                         Address</button>
                 </div>
                 <form [formGroup]="addressForm" (submit)="submitAddress()">
@@ -145,7 +156,7 @@
 
 
 
-        <div formArrayName="addressArray">
+        <!-- <div formArrayName="addressArray">
 
             <button mat-flat-button color="warn" mat-dialog-close>Close</button>
             <button *ngIf="!isEdit&&data.status==1" mat-button (click)="editRecord()">Edit Record</button>
@@ -153,8 +164,8 @@
 
             <button *ngIf="isEdit" mat-button (click)="closeEdit()">Close Edit</button>
 
-        </div>
-        <button (click)="submitAddress()" mat-flat-button color="accent">Submit</button>
+        </div> -->
+        <!-- <button (click)="submitAddress()" mat-flat-button color="accent">Submit</button> -->
 
 
         <br>
@@ -163,9 +174,9 @@
 
             <button mat-flat-button color="warn" mat-dialog-close>Close</button>
             <button *ngIf="data.status==0" (click)="showConfirmationScreen()" mat-flat-button
-                color="accent">Activate</button>
+                color="green">Activate</button>
             <button *ngIf="data.status==1" (click)="showConfirmationScreenDeactivate()" mat-flat-button
-                color="primary">Deactivate</button>
+                color="red">Deactivate</button>
 
             <button *ngIf="!isEdit&&data.status==1" mat-button (click)="editRecord()">Edit Record</button>
             <button *ngIf="isEdit" mat-button (click)="closeEdit()">Close Edit</button>
@@ -177,20 +188,26 @@
 </div>
 
 <div *ngIf="isConfirmationScreen" class="form-container">
-                <mat-dialog-content class="mat-typography">
-                    <h2 mat-dialog-title>Attention!</h2>
-                    <mat-dialog-content>
-
-                        <p>{{ actionSelected ? "Would you like to activate this patient?" : "Would you like to
-                            deactivate this
-                            patient?" }} </p>
-                    </mat-dialog-content>
-                    <mat-dialog-actions align="end">
-                        <button mat-button (click)="showConfirmationScreen()"> Cancel</button>
-                        <button (click)="activateRecord()" *ngIf="actionSelected" mat-dialog-close mat-raised-button
-                            color="primary">Activate</button>
-                        <button (click)="deactivateRecord()" *ngIf="!actionSelected" mat-dialog-close mat-raised-button
-                            color="primary">Deactivate</button>
-                    </mat-dialog-actions>
-                </mat-dialog-content>
+    <mat-dialog-content class="confirm-typography">
+        <h2 mat-dialog-title>Attention!</h2>
+        <mat-dialog-content>
+            <div *ngIf="data.status==1">
+                <p>
+                    Would you like to <strong>Deactivate</strong> this patient record?
+                </p>
             </div>
+            <div *ngIf="data.status==0">
+                <p>
+                    Would you like to <strong>Activate</strong> this patient record?
+                </p>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="confirm-container">
+            <button mat-button (click)="showConfirmationScreen()"> Cancel</button>
+            <button (click)="activateRecord()" *ngIf="actionSelected" mat-dialog-close mat-raised-button
+                color="green">Activate</button>
+            <button (click)="deactivateRecord()" *ngIf="!actionSelected" mat-dialog-close mat-raised-button
+                color="red">Deactivate</button>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</div>

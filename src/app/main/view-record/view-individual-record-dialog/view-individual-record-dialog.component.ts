@@ -68,6 +68,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   ngOnInit(): void {
     this.addressList$ = this.addressService.getAllAddressByID(this.data.patientId);
     console.log(this.data);
+    let statusString = this.data.status == 1 ? "Activated" : "Deactivated";
     this.recordForm = this.formBuilder.group({
       firstName: [this.data.firstName, [Validators.required]],
       middleName: [this.data.middleName],
@@ -75,11 +76,14 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       email: [this.data.email, [Validators.required]],
       contactNumber: [this.data.contactNumber, [Validators.required]],
       address: [this.data.address, [Validators.required]],
+      status:[statusString, [Validators.required]],
       birthdate: [this.data.birthdate, [Validators.required]],
       gender: [this.data.gender, [Validators.required]],
     });
     this.addressForm=this.formBuilder.group({
-      addressArray:this.formBuilder.array([this.formBuilder.control("")],[Validators.required])
+    addressArray:this.formBuilder.array([this.formBuilder.control("")],[Validators.required]),
+  
+
     });
     this.recordForm.disable();
     this.viewAddress();
@@ -88,7 +92,9 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
 
 
   createAddress() {
-    this.addressArray.push(this.formBuilder.control(''));
+
+      this.addressArray.push(this.formBuilder.control(''));
+    
   }
 
  
@@ -112,8 +118,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   }
 
    
-    
-
+  
 
   get addressArray (){
     return this.addressForm.get('addressArray') as FormArray;
@@ -130,14 +135,13 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       console.log(address.value);
        this.addressService.create(body).subscribe(
        p=>{
-        console.log("Address Entry");
-        this.dialog.open(ViewIndividualRecordDialogComponent);
+        this.toastr.success("Success", "Address Successfully Added")
+
+        // this.dialog.open(ViewIndividualRecordDialogComponent);
        },
       
        error =>{
-         this.valid = false;
-         this.submitted = false;
-         console.log(error);
+         this.toastr.error('Oops', 'There is a duplicate address entry');
        }
        )
       //  this.dataSource = new MatTableDataSource(this);
