@@ -39,7 +39,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   isConfirmationScreen: boolean = false;
   actionSelected: boolean;
   submitted = false;
-  addressList: NewAddress[] = [];
+  addressList;
   addressForm: FormGroup;
   alertSuccess: boolean = false;
   alertEmailDuplicateExist: boolean = false;
@@ -99,6 +99,15 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       .updateStatus(body, this.data.patientId)
       .subscribe((p) => {
         this.toastr.success('Success', 'Patient is now activated');
+      });
+  }
+
+  deactivateRecord() {
+    let body = { status: 0 };
+    this.statusService
+      .updateStatus(body, this.data.patientId)
+      .subscribe((p) => {
+        this.toastr.error('Success', 'Patient is now deactivated');
       });
   }
 
