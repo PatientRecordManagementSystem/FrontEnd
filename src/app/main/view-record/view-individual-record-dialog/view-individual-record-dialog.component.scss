@@ -1,2 +1,32 @@
 
+.mat-button.mat-green{
+    color:rgb((16), 190, 16)
+}
+
+.mat-raised-button.mat-green, .mat-flat-button.mat-green
+{
+    background-color: rgb(16, 190, 16);
+    color:white;
+}
+
+.mat-button.mat-red{
+    color:rgb(175, 25, 25)
+}
+
+
+.mat-raised-button.mat-red, .mat-flat-button.mat-red{
+    background-color: rgb(175, 25, 25);
+    color:white;
+}
+
+.confirm-typography{ 
+    overflow-y: hidden;
+    overflow-x: hidden;
+ 
+ }
+ 
+ .confirm-container {
+     min-height: 70px;
+ }
+
 

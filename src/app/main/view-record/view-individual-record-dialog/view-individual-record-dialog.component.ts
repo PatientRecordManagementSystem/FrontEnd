@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import {
   FormGroup,
   FormBuilder,
@@ -8,10 +8,14 @@ import {
   FormControl,
 } from '@angular/forms';
 import { AddressService } from 'src/app/services/add-address.service';
+import { NewAddress } from 'src/app/models/address.model';
 import { Patient } from 'src/app/models/patient.model';
-import { StatusService } from '../../../services/status.service';
+import {StatusService} from 'src/app/services/status.service';
 import { ToastrService } from 'ngx-toastr';
+import {Observable} from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 import { PatientService } from '../../../services/patient.service';
+
 
 @Component({
   selector: 'app-view-individual-record-dialog',
@@ -28,12 +32,14 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     private statusService: StatusService,
     private addressService: AddressService,
     private toastr: ToastrService,
-    private PatientService: PatientService
+    private PatientService: PatientService,
+    private dialog: MatDialog
   ) {}
 
   isConfirmationScreen: boolean = false;
   actionSelected: boolean;
   submitted = false;
+  addressList;
   addressForm: FormGroup;
   alertSuccess: boolean = false;
   alertEmailDuplicateExist: boolean = false;
@@ -42,8 +48,11 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   alertError: boolean = false;
   alertEmailContactNumDuplicateExist: boolean = false;
   maxDate = new Date();
+  valid = true;
   patientId = 0;
-
+  // private patient: Patient[] = [];
+  addressList$:Observable<any>;
+  
   patient: Patient = {
     lastName: this.data.lastName,
     firstName: this.data.firstName,
@@ -57,7 +66,9 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.addressList$ = this.addressService.getAllAddressByID(this.data.patientId);
     console.log(this.data);
+    let statusString = this.data.status == 1 ? "Activated" : "Deactivated";
     this.recordForm = this.formBuilder.group({
       firstName: [this.data.firstName, [Validators.required]],
       middleName: [this.data.middleName],
@@ -65,50 +76,28 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       email: [this.data.email, [Validators.required]],
       contactNumber: [this.data.contactNumber, [Validators.required]],
       address: [this.data.address, [Validators.required]],
+      status:[statusString, [Validators.required]],
       birthdate: [this.data.birthdate, [Validators.required]],
       gender: [this.data.gender, [Validators.required]],
     });
-    this.addressForm = this.formBuilder.group({
-      addressArray: this.formBuilder.array([this.formBuilder.control('')]),
+    this.addressForm=this.formBuilder.group({
+    addressArray:this.formBuilder.array([this.formBuilder.control("")],[Validators.required]),
+  
+
     });
     this.recordForm.disable();
+    this.viewAddress();
+
   }
 
-  get addressArray() {
-    return this.addressForm.get('addressArray') as FormArray;
-  }
 
   createAddress() {
-    this.addressArray.push(this.formBuilder.control(''));
+
+      this.addressArray.push(this.formBuilder.control(''));
+    
   }
 
-  // testAddAddress(){
-  //   this.addressArray.push(this.createAddress());
-
-  // }
-
-  submitAddress() {
-    for (let address of this.addressArray.controls) {
-      console.log(address.value);
-      let body = {
-        address: address.value,
-        patientId: this.data.patientId,
-      };
-      this.addressService.create(body).subscribe((p) => {
-        console.log('Address Entry');
-      });
-    }
-    //console.log(JSON.stringify(this.addressForm));
-    // for(let address of this.addressForm.get('addressArray')['controls']){
-    //   console.log(address.value);
-    // }
-  }
-
-  // removeItem(){
-  //   this.addressItems.pop();
-  //   this.addressArray.removeAt(this.addressArray.length-1);
-  // }
-
+ 
   //Code here Swarti
   activateRecord() {
     let body = { status: 1 };
@@ -119,26 +108,60 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
       });
   }
 
-  //Code here Swarti
   deactivateRecord() {
     let body = { status: 0 };
     this.statusService
       .updateStatus(body, this.data.patientId)
       .subscribe((p) => {
-        this.toastr.error('Deactivated!', 'Patient is now deactivated');
+        this.toastr.error('Success', 'Patient is now deactivated');
       });
   }
-  //Code here Kevin
 
-  addAddress() {
-    this.isEdit = true;
+   
+  
 
+  get addressArray (){
+    return this.addressForm.get('addressArray') as FormArray;
+  }
+
+ 
+  submitAddress(){
+    for(let address of this.addressArray.controls){
+      
+      let body = {
+        address : address.value,
+        patientId: this.data.patientId
+      }
+      console.log(address.value);
+       this.addressService.create(body).subscribe(
+       p=>{
+        this.toastr.success("Success", "Address Successfully Added")
+
+        // this.dialog.open(ViewIndividualRecordDialogComponent);
+       },
+      
+       error =>{
+         this.toastr.error('Oops', 'There is a duplicate address entry');
+       }
+       )
+      //  this.dataSource = new MatTableDataSource(this);
+    }
+
+  
+  }
+
+ 
+  addAddress()
+  {
+    this.isEdit=true;
+    
     this.addressService.create(this.newAddress).subscribe(
       (response) => {
         console.log(response);
         this.submitted = true;
       },
-      (error) => {
+      error => {
+        this.valid = false;
         console.log(error);
       }
     );
@@ -150,8 +173,25 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     this.recordForm.enable();
   }
 
-  editRecord() {
-    this.isEdit = true;
+
+  viewAddress()
+  {
+    this.addressService.getAllAddressByID(this.data.patientId).subscribe(data=> {
+      console.log(data);
+      this.addressList = data;
+      
+    })  
+  }
+
+  updateList()
+{
+  this.viewAddress();
+}
+
+  
+  editRecord(){
+    
+    this.isEdit=true;
     this.recordForm.enable();
   }
 
