@@ -23,7 +23,7 @@ export interface UserData {
 })
 export class ViewRecordComponent implements OnInit {
 
-  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'gender', 'email', 'contactNumber',  'status', 'actions'];
+  displayedColumns: string[] = ['patientId', 'firstName', 'middleName', 'lastName', 'gender', 'email', 'contactNumber', 'status', 'actions'];
   dataSource: MatTableDataSource<Patient>;
 
   activatedRecords;
@@ -42,7 +42,7 @@ export class ViewRecordComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('recordTable', { static: true }) table: MatTable<any>;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   constructor(private viewRecordService: ViewRecordService, public dialog: MatDialog) {
 
@@ -50,7 +50,22 @@ export class ViewRecordComponent implements OnInit {
 
   }
   ngOnInit(): void {
+
     this.onValChange(this.value);
+    //  this.viewRecordService.showPatientRecords().subscribe(p => {
+    //   this.allRecords = p.map(p => {
+    //     p['fullName'] = `${p.firstName} ${p.middleName} ${p.lastName}`;
+    //     p['firstLast'] = `${p.firstName} ${p.lastName}`;
+    //     p['date'] = new Date(p['birthdate']).toDateString();
+    //     return p;
+    //   })
+
+    //   this.dataSource = new MatTableDataSource(this.allRecords);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    //   this.isLoading = true;
+    //  },e=>{},()=>this.isLoading=false)
+
   }
 
   ngAfterViewInit() {
@@ -74,17 +89,17 @@ export class ViewRecordComponent implements OnInit {
   openDialog(row) {
     const dialogRef = this.dialog.open(ViewIndividualRecordDialogComponent, { data: row });
     dialogRef.afterClosed().subscribe(result => {
-      
-      
-    },e=>{},()=>{
-      this.onValChange(this.value);
+      this.ngOnInit();
+    }, e => { }, () => {
+      //this.onValChange(this.value);
+
+      this.ngOnInit();
     })
-    
   }
 
   onValChange(value) {
     this.isLoading = true;
-    this.value = value;
+    this.value=value;
     switch (value) {
       case 'Activated':
         this.viewRecordService.showActivatedPatientRecords().subscribe(p => {
@@ -94,12 +109,14 @@ export class ViewRecordComponent implements OnInit {
             p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
+        }
+        ,e=>{},()=>{
           this.dataSource = new MatTableDataSource(this.activatedRecords);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.isLoading = false;
-        }
-        );
+          
+        });
         break;
       case 'Deactivated':
         this.viewRecordService.showDeactivatedPatientRecords().subscribe(p => {
@@ -109,12 +126,15 @@ export class ViewRecordComponent implements OnInit {
             p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
+         
+        }
+        ,e=>{},()=>{
           this.dataSource = new MatTableDataSource(this.deactivatedRecords);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.isLoading = false;
-        }
-        )
+
+        })
         break;
       case 'All':
         this.viewRecordService.showPatientRecords().subscribe(p => {
@@ -124,12 +144,13 @@ export class ViewRecordComponent implements OnInit {
             p['date'] = new Date(p['birthdate']).toDateString();
             return p;
           })
+        },e=>{},()=>{
           this.dataSource = new MatTableDataSource(this.allRecords);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.isLoading = false;
-        }
-        )
+
+        })
         break;
       default:
 
