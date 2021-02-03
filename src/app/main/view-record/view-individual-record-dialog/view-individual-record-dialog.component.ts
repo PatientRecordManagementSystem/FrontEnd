@@ -98,22 +98,20 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
 
  
   //Code here Swarti
-  activateRecord() {
-    let body = { status: 1 };
-    this.statusService
-      .updateStatus(body, this.data.patientId)
-      .subscribe((p) => {
-        this.toastr.success('Success', 'Patient is now activated');
-      });
+  activateRecord(){
+    let body = {'status': 1};
+    this.statusService.updateStatus(body, this.data.patientId).subscribe(p=>{
+      this.toastr.success('SUCCESS!', 'Patient is now activated');
+    });
   }
+  
+  //Code here Swarti
+  deactivateRecord(){
+    let body = {'status': 0};
+    this.statusService.updateStatus(body, this.data.patientId).subscribe(p=>{
+      this.toastr.success('SUCCESS!', 'Patient is now deactivated')
+    });
 
-  deactivateRecord() {
-    let body = { status: 0 };
-    this.statusService
-      .updateStatus(body, this.data.patientId)
-      .subscribe((p) => {
-        this.toastr.error('Success', 'Patient is now deactivated');
-      });
   }
 
    
