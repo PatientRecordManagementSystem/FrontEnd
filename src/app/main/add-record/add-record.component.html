@@ -6,22 +6,22 @@
       <mat-form-field  appearance="outline">
           <mat-label> First Name
           </mat-label>
-          <input matInput formControlName="firstName" required>
+          <input matInput formControlName="firstName" style="text-transform:uppercase" required >
       </mat-form-field><br>
       <mat-form-field appearance="outline">
         <mat-label> Middle Name
         </mat-label>
-        <input matInput formControlName="middleName">
+        <input matInput formControlName="middleName" style="text-transform:uppercase">
     </mat-form-field><br>
     <mat-form-field appearance="outline">
         <mat-label> Last Name
         </mat-label>
-        <input matInput formControlName="lastName" required>
+        <input matInput formControlName="lastName" style="text-transform:uppercase" required>
     </mat-form-field><br>
     <mat-form-field appearance="outline">
       <mat-label> Address
       </mat-label>
-      <input matInput formControlName="address" required>
+      <input matInput formControlName="address" style="text-transform:uppercase" required>
   </mat-form-field><br>
   <mat-form-field appearance="outline">
     <mat-label> Contact Number
@@ -42,9 +42,9 @@
     <mat-form-field appearance="outline">
       <mat-label>Gender</mat-label>
       <select formControlName="gender" matNativeControl required>
-        <option value="MALE">Male</option>
-        <option value="FEMALE">Female</option>
-        <option value="OTHERS">Others</option>
+        <option value="male">MALE</option>
+        <option value="female">FEMALE</option>
+        <option value="others">OTHERS</option>
       </select>
     </mat-form-field><br>
     <button [disabled]="!addPatient.valid" class="btn btn-success">Submit</button>
@@ -58,3 +58,4 @@
   <h4>User cannot have duplicate email or contact number</h4><br><br>
   <button (click)="validUser()" class="btn btn-danger" >Back</button>
 </div>
+<!-- {{  addPatient.value : JSON.parse() }} -->
