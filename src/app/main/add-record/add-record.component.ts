@@ -31,6 +31,11 @@ export class AddRecordComponent implements OnInit {
     })
   }
   savePatient(): void{
+    this.addPatient.value.firstName = this.addPatient.value.firstName.toUpperCase();
+    this.addPatient.value.middleName = this.addPatient.value.middleName.toUpperCase();
+    this.addPatient.value.lastName = this.addPatient.value.lastName.toUpperCase();
+    this.addPatient.value.address = this.addPatient.value.address.toUpperCase();
+    this.addPatient.value.gender = this.addPatient.value.gender.toUpperCase();
     console.log(this.addPatient.value);
     this.PatientService.create(this.addPatient.value)
       .subscribe(
