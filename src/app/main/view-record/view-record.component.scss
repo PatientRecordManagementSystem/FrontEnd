@@ -18,9 +18,9 @@ td, th {
 }
 
 .spinner{
-  display: block;
-  margin-left: 10%;
-  margin-right: 10%;
+  display:flex;
+  justify-content: center; 
+  align-items: center;
 
 }
 
