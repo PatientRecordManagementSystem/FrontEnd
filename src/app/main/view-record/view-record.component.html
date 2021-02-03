@@ -30,7 +30,7 @@
             </mat-button-toggle>
         </mat-button-toggle-group>
         <div class="mat-elevation-z8">
-            <table style="width:100%" mat-table [dataSource]="dataSource" matSort>
+            <table *ngIf="!isLoading" style="width:100%" mat-table [dataSource]="dataSource" matSort>
 
 
                 <ng-container matColumnDef="patientId">

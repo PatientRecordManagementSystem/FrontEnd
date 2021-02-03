@@ -74,13 +74,16 @@ export class ViewRecordComponent implements OnInit {
   openDialog(row) {
     const dialogRef = this.dialog.open(ViewIndividualRecordDialogComponent, { data: row });
     dialogRef.afterClosed().subscribe(result => {
+      
+      
+    },e=>{},()=>{
       this.onValChange(this.value);
     })
+    
   }
 
   onValChange(value) {
     this.isLoading = true;
-    this.dataSource = null;
     this.value = value;
     switch (value) {
       case 'Activated':
