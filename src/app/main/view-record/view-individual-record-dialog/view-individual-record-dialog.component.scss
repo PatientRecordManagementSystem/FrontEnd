@@ -46,3 +46,19 @@
   .close-icon {
     transition: 1s ease-in-out;
   }
+
+.column {
+    float: left;
+    width: 50%;
+  }
+.first{
+    padding-left: 2%;
+}
+.second{
+    padding-right: 2%;
+}
+  
+  /* Clear floats after the columns */
+  .row:after {
+    display: table;
+  }
