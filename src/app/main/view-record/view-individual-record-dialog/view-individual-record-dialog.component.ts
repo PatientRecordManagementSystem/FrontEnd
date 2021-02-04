@@ -33,10 +33,12 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     private addressService: AddressService,
     private toastr: ToastrService,
     private PatientService: PatientService,
-    private dialog: MatDialog
+    private dialogRef: MatDialog
+
   ) {}
 
   isConfirmationScreen: boolean = false;
+  closeUpdateButtonCLicked: boolean = false;
   actionSelected: boolean;
   submitted = false;
   addressForm: FormGroup;
@@ -63,7 +65,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     gender: this.data.gender,
     status: 1,
   };
-
+  changeCount: number = 0;
   ngOnInit(): void {
     this.addressList$ = this.addressService.getAllAddressByID(this.data.patientId);
     console.log(this.data);
@@ -126,7 +128,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     for(let address of this.addressArray.controls){
       
       let body = {
-        address : address.value,
+        address : address.value.toUpperCase(),
         patientId: this.data.patientId
       }
       console.log(address.value);
@@ -193,6 +195,17 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     
     this.isEdit=true;
     this.recordForm.enable();
+  }
+
+  closeWithChangesConfirmation():void{
+    console.log(!this.actionSelected)
+    if(this.changeCount>0){
+      this.actionSelected = null;
+      this.isConfirmationScreen = !this.isConfirmationScreen;
+      this.closeUpdateButtonCLicked = true;
+    }else{
+      this.dialogRef.closeAll();
+    }
   }
 
   //Code here Albert
@@ -308,10 +321,12 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   showConfirmationScreen() {
     this.actionSelected = true;
     this.isConfirmationScreen = !this.isConfirmationScreen;
+    this.closeUpdateButtonCLicked = false;
   }
 
   showConfirmationScreenDeactivate() {
     this.actionSelected = false;
     this.isConfirmationScreen = !this.isConfirmationScreen;
+    this.closeUpdateButtonCLicked = false;
   }
 }
