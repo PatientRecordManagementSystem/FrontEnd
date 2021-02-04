@@ -126,7 +126,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     for(let address of this.addressArray.controls){
       
       let body = {
-        address : address.value,
+        address : address.value.toUpperCase(),
         patientId: this.data.patientId
       }
       console.log(address.value);

@@ -130,10 +130,11 @@
                             <mat-form-field class="form-field">
                                 <mat-label> Address
                                 </mat-label>
-                                <input matInput [formControlName]="i" required>
+                                <input matInput [formControlName]="i" style="text-transform:uppercase" required>
                             </mat-form-field>
                         </div>
                     </div>
+                    <br>
 
                     <button [disabled]="!addressForm.valid" mat-flat-button color="accent">Submit</button>
                 </form>
@@ -142,6 +143,7 @@
 
 
             <mat-tab (click)="updateList()" label="Address List">
+                <br>
                 <ul>
                     <li *ngFor="let address of addressList">
                         {{address.address}}
