@@ -51,6 +51,7 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
   maxDate = new Date();
   valid = true;
   patientId = 0;
+  updateSuccessful: boolean = false;
   addressList: NewAddress[]
   // private patient: Patient[] = [];
   addressList$:Observable<any>;
@@ -199,17 +200,23 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
 
   closeWithChangesConfirmation():void{
     console.log(!this.actionSelected)
-    if(this.changeCount>0){
-      this.actionSelected = null;
-      this.isConfirmationScreen = !this.isConfirmationScreen;
-      this.closeUpdateButtonCLicked = true;
+    if(!this.updateSuccessful){
+      if(this.changeCount>0){
+        this.actionSelected = null;
+        this.isConfirmationScreen = !this.isConfirmationScreen;
+        this.closeUpdateButtonCLicked = true;
+      }else{
+        this.dialogRef.closeAll();
+      }
     }else{
       this.dialogRef.closeAll();
     }
+    
   }
 
   //Code here Albert
   submitEditRecordForm(): void {
+    this.updateSuccessful = true;
     this.alertSuccess = false;
     this.alertContactNumDuplicateExist = false;
     this.alertEmailDuplicateExist = false;
