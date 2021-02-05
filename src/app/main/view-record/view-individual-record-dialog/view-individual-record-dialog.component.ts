@@ -336,4 +336,12 @@ export class ViewIndividualRecordDialogComponent implements OnInit {
     this.isConfirmationScreen = !this.isConfirmationScreen;
     this.closeUpdateButtonCLicked = false;
   }
+  matTabSelect($event){
+    if($event.index != 0){
+      this.isEdit = false;
+    }else{
+      this.isEdit = true;
+    }
+  }
 }
+

@@ -34,7 +34,7 @@
        
     <mat-dialog-content class="mat-typography">
         
-        <mat-tab-group animationDuration="1000ms">
+        <mat-tab-group animationDuration="1000ms" (selectedTabChange)="matTabSelect($event)">
             <mat-tab label="Edit">
                 <br>
                 <br>
@@ -184,24 +184,6 @@
 
     </mat-dialog-content>
 </div>
-<!-- 
-<div *ngIf="isConfirmationScreenCloseUpdate" class="form-container">
-    <mat-dialog-content >
-        <h2 mat-dialog-title>Attention!</h2>
-        <mat-dialog-content>
-            <div >
-                <p>
-                   There are <strong>unsaved changes</strong> do you wish to continue ?
-                </p>
-            </div>
-        </mat-dialog-content>
-        <mat-dialog-actions align="end" >
-            <button mat-button (click)="showConfirmationScreen()"> Cancel</button>
-            <button [mat-dialog-close]="true" mat-raised-button
-                color="red">OK</button>
-        </mat-dialog-actions>
-    </mat-dialog-content>
-</div> -->
 
 <div *ngIf="isConfirmationScreen" class="form-container">
     <mat-dialog-content class="confirm-typography">
